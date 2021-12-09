@@ -13,11 +13,13 @@ const sellerSchema = new mongoose.Schema({
     email:{
         type:String,
         trim: true,
+        required:true,
         unique:true
     },
     phone:{
         type:String,
         trim:true,
+        required:true,
         maxlength:10,
     },
     hashed_password:{

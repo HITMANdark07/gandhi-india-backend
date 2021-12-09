@@ -13,10 +13,12 @@ const AgentSchema = new mongoose.Schema({
     email:{
         type:String,
         trim: true,
+        required:true,
         unique:true
     },
     phone:{
         type:String,
+        required:true,
         trim:true,
         maxlength:10,
     },

@@ -47,9 +47,9 @@ exports.create = (req, res) => {
                 error: 'Something Went Wrong'
             });
         }
-        const { name, email } = fields;
+        const { name, email, phone } = fields;
 
-         if(!name && !email){
+         if(!name && !email && !phone){
             return res.status(400).json({
                 error: 'All fields are required'
             });
