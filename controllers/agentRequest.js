@@ -34,7 +34,6 @@ exports.list = (req, res) => {
                 error:"Unable to Fetch KYC Requests"
             });
         }
-        console.log(agentRequests);
         return res.json(agentRequests);
     })
 }
