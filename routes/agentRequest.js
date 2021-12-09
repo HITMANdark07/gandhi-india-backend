@@ -4,6 +4,7 @@ const router = express.Router();
 const { agentRequestById, create, remove, photo, pan, id_proof,signature, read, list } = require("../controllers/agentRequest");
 
 router.post("/agent/kyc", create);
+router.post("/agent/kyc/list", list);
 router.get("/agent/kyc/details/:agentRequestId", read);
 router.get("/agent/kyc/photo/:agentRequestId", photo);
 router.get("/agent/kyc/pan/:agentRequestId", pan);
