@@ -57,7 +57,7 @@ exports.create = (req, res) => {
          }
 
 
-        let agentRequest = new agentRequest(fields);
+        let agentRequest = new AgentRequest(fields);
 
         // 1kb = 1000 ~ 
         // 1mb = 1000000 ~

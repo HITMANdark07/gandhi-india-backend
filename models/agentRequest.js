@@ -8,27 +8,24 @@ const AgentRequestSchema = new mongoose.Schema({
     },
     email:{
         type:String,
+        unique:true,
         required:true,
     },
     pan:{
-        type:Buffer,
+        data:Buffer,
         contentType:String,
-        required:true,
     },
     id_proof:{
-        type:Buffer,
-        contentType:String,
-        required:true,
+        data:Buffer,
+        contentType:String
     },
     photo:{
-        type:Buffer,
+        data:Buffer,
         contentType:String,
-        required:true,
     },
     signature:{
-        type:Buffer,
+        data:Buffer,
         contentType:String,
-        required:true,
     }
 },{timestamps:true});
 
