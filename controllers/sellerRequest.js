@@ -49,10 +49,16 @@ exports.create = (req, res) => {
             });
         }
         const { name, email, phone } = fields;
+        console.log(name, email, phone);
 
-         if(!name && !email && !phone){
+         if(!name || !email || !phone){
             return res.status(400).json({
                 error: 'All fields are required'
+            });
+         }
+         if(phone.length!=10){
+            return res.status(400).json({
+                error: 'Phone number Should contain 10 digits...'
             });
          }
 

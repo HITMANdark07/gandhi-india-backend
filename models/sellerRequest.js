@@ -11,6 +11,12 @@ const SellerRequestSchema = new mongoose.Schema({
         unique:true,
         required:true,
     },
+    phone:{
+        type:String,
+        required:true,
+        required:true,
+        maxlength:10
+    },
     pan:{
         data:Buffer,
         contentType:String,
