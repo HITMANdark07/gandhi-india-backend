@@ -57,6 +57,7 @@ exports.create = (req, res) => {
                     });
                 }
                 res.json({
+                    id:result._id,
                     message:"Uploaded"
                 });
             });
