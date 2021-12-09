@@ -26,7 +26,7 @@ const AgentSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    commision:{
+    commission:{
         type:Number,
         required:true,
     },
