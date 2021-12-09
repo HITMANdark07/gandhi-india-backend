@@ -6,7 +6,7 @@ const { ImageById, create, update,photo, remove } = require("../controllers/imag
 router.post("/image/create", create);
 router.put("/image/update/:imageId", update);
 router.get("/image/photo/:imageId", photo);
-router.delete("/image/delete/:userId",remove);
+router.delete("/image/delete/:imageId",remove);
 
 router.param("imageId", ImageById);
 

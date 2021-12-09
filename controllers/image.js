@@ -103,25 +103,37 @@ exports.update = (req, res) => {
         // 1mb = 1000000
 
         if(files.photo){
-            //console.log("FILES_PHOTO",files.photo);
+            // console.log("FILES_PHOTO",files.photo);
             if(files.photo.size > 1000000){
                 return res.status(400).json({
                     error: 'Image should be less than 1mb in size'
                 });
             }
-            image.photo.data = fs.readFileSync(files.photo.path);
-            image.photo.contentType = files.photo.type
-        }
-        image.save((err, result)=>{
-            if(err){
+            if(files.photo.filepath){
+                image.photo.data = fs.readFileSync(files.photo.filepath);
+                image.photo.contentType = files.photo.mimetype;
+            }else{
                 return res.status(400).json({
-                    error: errorHandler(err)
+                    error: 'Image path is not specified'
                 });
             }
-            res.json({
-                message:'Updated'
+            image.save((err, result)=>{
+                if(err){
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                res.json({
+                    id:result._id,
+                    message:"Uploaded"
+                });
             });
-        });
+            
+        }else{
+            return res.status(400).json({
+                error: 'Please add image file'
+            });
+        }
     });
 };
 
