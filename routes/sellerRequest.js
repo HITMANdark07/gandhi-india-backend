@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { sellerRequestById, create, remove, photo, pan, id_proof,signature, read } = require("../controllers/sellerRequest");
+const { sellerRequestById, create, remove, photo, pan, id_proof,signature, read, list } = require("../controllers/sellerRequest");
 
 router.post("/seller/kyc", create);
+router.get('/seller/kyc/list', list);
 router.get("/seller/kyc/details/:sellerRequestId", read);
 router.get("/seller/kyc/photo/:sellerRequestId", photo);
 router.get("/seller/kyc/pan/:sellerRequestId", pan);

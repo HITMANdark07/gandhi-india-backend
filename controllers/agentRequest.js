@@ -1,44 +1,43 @@
 const formidable = require('formidable');
 const _ = require('lodash');
 const fs = require('fs');
-const SellerRequest = require('../models/sellerRequest');
+const AgentRequest = require('../models/agentRequest');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-exports.sellerRequestById = (req, res, next, id) => {
-    SellerRequest.findById(id)
-    .exec((err, sellerRequest)=>{
-        if(err || !sellerRequest) {
+exports.agentRequestById = (req, res, next, id) => {
+    AgentRequest.findById(id)
+    .exec((err, agentRequest)=>{
+        if(err || !agentRequest) {
             return res.status(400).json({
-                error:"sellerRequest not found"
+                error:"agent Request not found"
             });
         } 
-        req.sellerRequest = sellerRequest;
+        req.agentRequest = agentRequest;
         next();
     });
 };
 
+exports.read = (req, res)=>{
+    req.agentRequest.photo = undefined;
+    req.agentRequest.pan = undefined;
+    req.agentRequest.id_proof = undefined;
+    req.agentRequest.signature = undefined;
+    return res.json(req.agentRequest);
+};
+
 exports.list = (req, res) => {
-    SellerRequest.find()
+    AgentRequest.find()
     .select("-photo -pan -id_proof -signature")
-    .exec((err,sellerRequest) => {
-        if(err || !sellerRequest){
+    .exec((err,agentRequests) => {
+        if(err || !agentRequests){
             return res.status(400).json({
                 error:"Unable to Fetch KYC Requests"
             });
         }
-        console.log(sellerRequest);
-        return res.json(sellerRequest);
+        console.log(agentRequests);
+        return res.json(agentRequests);
     })
 }
-
-exports.read = (req, res)=>{
-    req.sellerRequest.photo = undefined;
-    req.sellerRequest.pan = undefined;
-    req.sellerRequest.id_proof = undefined;
-    req.sellerRequest.signature = undefined;
-    return res.json(req.sellerRequest);
-};
-
 
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm()
@@ -58,7 +57,7 @@ exports.create = (req, res) => {
          }
 
 
-        let sellerRequest = new SellerRequest(fields);
+        let agentRequest = new agentRequest(fields);
 
         // 1kb = 1000 ~ 
         // 1mb = 1000000 ~
@@ -71,20 +70,20 @@ exports.create = (req, res) => {
                 });
             }
             if(files.photo.filepath && files.pan.filepath && files.id_proof.filepath && files.signature.filepath){
-                sellerRequest.photo.data = fs.readFileSync(files.photo.filepath);
-                sellerRequest.photo.contentType = files.photo.mimetype;
-                sellerRequest.pan.data = fs.readFileSync(files.pan.filepath);
-                sellerRequest.pan.contentType = files.pan.mimetype;
-                sellerRequest.id_proof.data = fs.readFileSync(files.id_proof.filepath);
-                sellerRequest.id_proof.contentType = files.id_proof.mimetype;
-                sellerRequest.signature.data = fs.readFileSync(files.signature.filepath);
-                sellerRequest.signature.contentType = files.signature.mimetype;
+                agentRequest.photo.data = fs.readFileSync(files.photo.filepath);
+                agentRequest.photo.contentType = files.photo.mimetype;
+                agentRequest.pan.data = fs.readFileSync(files.pan.filepath);
+                agentRequest.pan.contentType = files.pan.mimetype;
+                agentRequest.id_proof.data = fs.readFileSync(files.id_proof.filepath);
+                agentRequest.id_proof.contentType = files.id_proof.mimetype;
+                agentRequest.signature.data = fs.readFileSync(files.signature.filepath);
+                agentRequest.signature.contentType = files.signature.mimetype;
             }else{
                 return res.status(400).json({
                     error: 'All File path should be correct'
                 });
             }
-            sellerRequest.save((err, result)=>{
+            agentRequest.save((err, result)=>{
                 if(err){
                     return res.status(400).json({
                         error: errorHandler(err)
@@ -103,8 +102,8 @@ exports.create = (req, res) => {
 };
 
 exports.remove = (req,res) => {
-    let sellerRequest = req.sellerRequest;
-    sellerRequest.remove((err, deletedImage)=>{
+    let agentRequest = req.agentRequest;
+    agentRequest.remove((err, deletedImage)=>{
         if(err){
             return res.status(400).json({
                 error: errorHandler(err)
@@ -117,33 +116,33 @@ exports.remove = (req,res) => {
 };
 
 exports.photo = (req, res, next) => {
-    if(req.sellerRequest.photo.data){
-        res.set('Content-Type', req.sellerRequest.photo.contentType);
-        return res.send(req.sellerRequest.photo.data);
+    if(req.agentRequest.photo.data){
+        res.set('Content-Type', req.agentRequest.photo.contentType);
+        return res.send(req.agentRequest.photo.data);
     }
     next();
 };
 
 exports.pan = (req, res, next) => {
-    if(req.sellerRequest.pan.data){
-        res.set('Content-Type', req.sellerRequest.pan.contentType);
-        return res.send(req.sellerRequest.pan.data);
+    if(req.agentRequest.pan.data){
+        res.set('Content-Type', req.agentRequest.pan.contentType);
+        return res.send(req.agentRequest.pan.data);
     }
     next();
 }
 
 exports.id_proof = (req, res,next) => {
-    if(req.sellerRequest.id_proof.data){
-        res.set('Content-Type', req.sellerRequest.id_proof.contentType);
-        return res.send(req.sellerRequest.id_proof.data);
+    if(req.agentRequest.id_proof.data){
+        res.set('Content-Type', req.agentRequest.id_proof.contentType);
+        return res.send(req.agentRequest.id_proof.data);
     }
     next();
 }
 
 exports.signature = (req, res,next) => {
-    if(req.sellerRequest.signature.data){
-        res.set('Content-Type', req.sellerRequest.signature.contentType);
-        return res.send(req.sellerRequest.signature.data);
+    if(req.agentRequest.signature.data){
+        res.set('Content-Type', req.agentRequest.signature.contentType);
+        return res.send(req.agentRequest.signature.data);
     }
     next();
 }

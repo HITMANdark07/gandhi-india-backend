@@ -14,6 +14,7 @@ require('dotenv').config();
 // const productRoutes = require('./routes/product');
 const imageRoutes = require('./routes/image');
 const sellerRequestRoutes = require('./routes/sellerRequest');
+const agentRequestRoutes = require('./routes/agentRequest');
 // const orderRoutes = require('./routes/order');
 
 
@@ -42,6 +43,7 @@ app.use(cors());
 // app.use("/api",productRoutes);
 app.use("/api",imageRoutes);
 app.use("/api",sellerRequestRoutes);
+app.use("/api",agentRequestRoutes);
 
 const port = process.env.PORT|| 8000;
 
