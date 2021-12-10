@@ -35,6 +35,19 @@ exports.list = (req, res) => {
     })
 }
 
+exports.categoryBySlug =(req, res) => {
+    Category.findOne({slug:req.body.slug})
+        .exec((err, category) => {
+            if(err || !category){
+                return res.status(400).json({
+                    error:"Unable to Fetch Category"
+                });
+            }
+            category.photo=undefined;
+            return res.json(category);
+        })
+}
+
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm()
     form.keepExtensions = true
