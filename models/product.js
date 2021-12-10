@@ -9,11 +9,11 @@ const productSchema = new mongoose.Schema({
         required:true,
         maxlength:32
     },
-    // description:{
-    //     type:String,
-    //     required:true,
-    //     maxlength:2000
-    // },
+    description:{
+        type:String,
+        required:true,
+        maxlength:2000
+    },
     price:{
         type:Number,
         trim:true,
@@ -48,7 +48,10 @@ const productSchema = new mongoose.Schema({
         type:Number,
         default:0,
     },
-    photo:[ {type:String} ],
+    photo:{
+        type:Array,
+        default:[]
+    },
     shipping:{
         required:false,
         type: Boolean
@@ -60,7 +63,7 @@ const productSchema = new mongoose.Schema({
     },
     status:{
         type:Number,
-        default:0
+        default:0  // 0 not live 1 live
     },
     cod:{
         type:Number,

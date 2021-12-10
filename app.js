@@ -18,6 +18,7 @@ const agentRequestRoutes = require('./routes/agentRequest');
 const adminAuthRoutes = require("./routes/admin");
 const sellerAuthRoutes = require("./routes/seller");
 const agentAuthRoutes = require("./routes/agent");
+const categoryRoutes = require("./routes/category");
 // const orderRoutes = require('./routes/order');
 
 
@@ -50,6 +51,7 @@ app.use("/api",agentRequestRoutes);
 app.use("/api",adminAuthRoutes);
 app.use("/api",sellerAuthRoutes);
 app.use("/api",agentAuthRoutes);
+app.use("/api",categoryRoutes);
 
 const port = process.env.PORT|| 8000;
 
