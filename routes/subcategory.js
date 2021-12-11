@@ -6,11 +6,11 @@ const { requireSigninAdmin, isAdmin, adminById } = require("../controllers/admin
 
 router.post("/admin/sub-cateogry/add/:adminId",requireSigninAdmin, isAdmin, create);
 router.get("/sub-category-list", list);
-router.get("/sub-category-by/category", subcategoriesByCategory);
+router.post("/sub-category-by/category", subcategoriesByCategory);
 router.put("/admin/sub-category/update/:subcategoryId/:adminId",requireSigninAdmin, isAdmin, update);
 router.delete("/admin/sub-category/delete/:subcategoryId/:adminId",requireSigninAdmin, isAdmin, remove);
 router.get("/sub-category/:subcategoryId", read);
-router.get("/sub-category-slug", subcategoryBySlug);
+router.post("/sub-category-slug", subcategoryBySlug);
 router.get("/sub-category/photo/:subcategoryId",photo);
 
 router.param("subcategoryId", subcategoryById);
