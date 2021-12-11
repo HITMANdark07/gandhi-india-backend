@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const { categoryById, create, remove, photo, update, read,list, categoryBySlug } = require("../controllers/category");
-const { requireSignin, isAdmin, adminById } = require("../controllers/admin");
+const { requireSigninAdmin, isAdmin, adminById } = require("../controllers/admin");
 
-router.post("/admin/cateogry/add/:adminId",requireSignin, isAdmin, create);
+router.post("/admin/cateogry/add/:adminId",requireSigninAdmin, isAdmin, create);
 router.get("/category-list", list);
-router.put("/admin/category/update/:categoryId/:adminId",requireSignin, isAdmin, update);
-router.delete("/admin/category/delete/:categoryId/:adminId",requireSignin, isAdmin, remove);
+router.put("/admin/category/update/:categoryId/:adminId",requireSigninAdmin, isAdmin, update);
+router.delete("/admin/category/delete/:categoryId/:adminId",requireSigninAdmin, isAdmin, remove);
 router.get("/category/:categoryId", read);
 router.get("/category-slug", categoryBySlug);
 router.get("/category/photo/:categoryId",photo);

@@ -104,3 +104,20 @@ exports.agentSignupValidator = (req,res, next)=>{
     }
     next();
 };
+
+exports.productValidator = (req,res, next)=>{
+    req.check('name', 'Name is required').notEmpty()
+    req.check('description','Description is Required').notEmpty()
+    req.check('price', 'Price is required').notEmpty()
+    req.check('mrp', 'MRP is required').notEmpty()
+    req.check('category', 'Category is required').notEmpty()
+    req.check('subCategory', 'SubCategory must not be empty').notEmpty()
+    req.check('quantity','Quantity is Required').notEmpty();
+    req.check('added_by','Seller id is Required').notEmpty();
+    const errors = req.validationErrors();
+    if(errors){
+        const firstError = errors.map(error => error.msg)[0];
+        return res.status(400).json({ error: firstError });
+    }
+    next();
+};

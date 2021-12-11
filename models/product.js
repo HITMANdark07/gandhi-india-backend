@@ -38,6 +38,7 @@ const productSchema = new mongoose.Schema({
     },
     quantity:{
         type: Number,
+        required:true,
         default:0
     },
     sold:{
@@ -58,7 +59,7 @@ const productSchema = new mongoose.Schema({
     },
     added_by:{
         type:ObjectId,
-        ref:'User',
+        ref:'Seller',
         required:true,
     },
     status:{

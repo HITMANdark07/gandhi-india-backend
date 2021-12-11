@@ -59,14 +59,13 @@ exports.signout = (req,res) => {
     res.json({message: 'Signout Success'});
 };
 
-exports.requireSignin = expressJwt({
+exports.requireSigninSeller = expressJwt({
     secret: process.env.JWT_SECRET_SELLER,
     algorithms: ['HS256'] ,
     userProperty:"auth"
 });
 
 exports.isSeller = (req, res, next) => {
-    console.log(req.profile._id === req.auth._id);
     let seller = req.profile && req.auth && req.profile._id == req.auth._id;
     if(!seller){
        return res.status(403).json({ 
