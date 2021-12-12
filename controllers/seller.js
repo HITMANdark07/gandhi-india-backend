@@ -54,6 +54,18 @@ exports.signin = (req, res) =>{
     });
 };
 
+exports.list = (req,res) => {
+    Seller.find()
+    .exec((err, sellers) =>{
+        if(err || !sellers){
+            return res.status(400).json({
+                error:"Sellers Not fetched"
+            })
+        }
+        return res.json(sellers);
+    })
+}
+
 exports.signout = (req,res) => {
     res.clearCookie('t')
     res.json({message: 'Signout Success'});
