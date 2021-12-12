@@ -5,14 +5,14 @@ const SpecificationSchema = new mongoose.Schema({
     name:{
         type:String,
         trim: true,
+        unique:true,
         required:true,
         maxlength:32
     },
     options:{
         type:String,
         trim:true,
-        required:true,
-        maxlength:32
+        required:true
     },
     subCategory:{
         type:ObjectId,

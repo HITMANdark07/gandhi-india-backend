@@ -21,6 +21,7 @@ const agentAuthRoutes = require("./routes/agent");
 const categoryRoutes = require("./routes/category");
 const subcategoryRoutes = require("./routes/subcategory");
 const productRoutes = require("./routes/product");
+const specificationRoutes =require("./routes/specification");
 // const orderRoutes = require('./routes/order');
 
 
@@ -56,6 +57,7 @@ app.use("/api",agentAuthRoutes);
 app.use("/api",categoryRoutes);
 app.use("/api",subcategoryRoutes);
 app.use("/api",productRoutes);
+app.use("/api",specificationRoutes);
 
 const port = process.env.PORT|| 8000;
 
