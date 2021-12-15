@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.ObjectId;
 const crypto = require('crypto');
 const uuidv1 = require('uuid/v1');
 
@@ -21,6 +22,15 @@ const sellerSchema = new mongoose.Schema({
         trim:true,
         required:true,
         maxlength:10,
+    },
+    registrationId:{
+        type:ObjectId,
+        ref:'SellerSchema',
+        required:true,
+    },
+    verified:{
+        type:Number,
+        default:0
     },
     hashed_password:{
         type:String,

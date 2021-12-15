@@ -2,6 +2,8 @@ const Seller = require('../models/seller');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const { errorHandler } = require('../helpers/dbErrorHandler');
+const nodemailer = require('nodemailer');
+const SellerRequest = require('../models/sellerRequest');
 
 exports.signUp = (req,res) => {
 
@@ -98,4 +100,42 @@ exports.sellerById = (req, res, next, id) => {
         next();
     });
 };
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_ID,
+      pass: process.env.EMAIL_PWD
+    }
+  });
+
+exports.sendSellerEmail = (req, res) => {
+    const {name, email, phone, id} = req.body;
+    const token = jwt.sign({name, email, phone,id}, process.env.JWT_SELLER_ACTIVATION, {expiresIn: '10m'});
+    var mailOptions = {
+        from: process.env.EMAIL_ID,
+        to: email,
+        subject: 'KYC Completed, Now Activate your Account',
+        text: 'That was really easy!',
+        html:`
+        <h1>please use the following link to acttivate your account</h1>
+        <p>${process.env.CLIENT_URL}/activate/${token}</p>
+        <hr/>
+        <p>This email may contain sensitive information</p>
+        <p>${process.env.CLIENT_URL}</p>
+        `
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          res.json({
+              error: 'Unable to send Email. please try after some time'
+          })
+        } else {
+          res.json({
+              message: `Email has been sent to ${email} for activation.`
+          })
+        }
+      });
+}
 
