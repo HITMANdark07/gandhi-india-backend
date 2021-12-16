@@ -20,7 +20,7 @@ exports.read = (req, res) => {
 }
 
 exports.listFeaturedProducts =(req, res) => {
-    Product.find({featured:1}).exec((err, products) => {
+    Product.find({featured:1,status:1}).exec((err, products) => {
         if(err || !products){
             return res.status(400).json({
                 error:"Cant fetch Featred Products"
