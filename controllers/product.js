@@ -4,6 +4,7 @@ const product = require('../models/product');
 
 exports.productById = (req, res, next, id) => {
     Product.findOne({_id:id})
+    .populate("category" ,"_id name")
     .exec((err, product) => {
         if(err || !product){
             return res.status(400).json({
