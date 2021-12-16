@@ -56,8 +56,7 @@ exports.list = (req, res) => {
 };
 
 exports.listByCategory = (req, res) => {
-    if(req.body.category){
-    Product.find({category:req.body.category})
+    Product.find({category:req.category._id})
     .populate("category subCategory","name slug")
     .exec((err, products) => {
         if(err || !products){
@@ -67,26 +66,11 @@ exports.listByCategory = (req, res) => {
         }
         return res.json(products);
     });
-    }else{
-    Product.find()
-    .populate("category subCategory","name slug")
-    // .find({category:{slug:req.body.slug}})
-    .exec((err, products) => {
-        if(err || !products){
-            return res.status(400).json({
-                error: "Unabel to Fetch Products2"
-            })
-        }
-        products = products.filter((pro) => pro.category.slug===req.body.slug);
-        return res.json(products);
-    });
-    }
 }
 
 
 exports.listBySubCategory = (req, res) => {
-    if(req.body.subCategory){
-    Product.find({subCategory:req.body.subCategory})
+    Product.find({subCategory:req.subCategory._id})
     .populate("category subCategory","name slug")
     .exec((err, products) => {
         if(err || !products){
@@ -96,20 +80,6 @@ exports.listBySubCategory = (req, res) => {
         }
         return res.json(products);
     });
-    }else{
-    Product.find()
-    .populate("category subCategory","name slug")
-    // .find({subCategory:{slug:req.body.slug}})
-    .exec((err, products) => {
-        if(err || !products){
-            return res.status(400).json({
-                error: "Unabel to Fetch Products"
-            })
-        }
-        products = products.filter((pro) => pro.subCategory.slug===req.body.slug);
-        return res.json(products);
-    });
-    }
 };
 
 exports.createBySeller = (req, res) => {

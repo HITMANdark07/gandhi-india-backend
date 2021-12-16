@@ -5,6 +5,8 @@ const { createByAdmin, createBySeller, listByAdmin, productById, listByCategory,
 const { requireSigninAdmin, isAdmin, adminById } = require("../controllers/admin");
 const { sellerById, requireSigninSeller, isSeller } = require("../controllers/seller");
 const { productValidator } = require("../validator/index");
+const { categoryById } = require("../controllers/category");
+const { subcategoryById } = require("../controllers/subcategory");
 
 router.post("/admin/product/add/:adminId",requireSigninAdmin, isAdmin, createByAdmin);
 router.post("/seller/product/add/:sellerId",productValidator,requireSigninSeller, isSeller, createBySeller);
@@ -14,9 +16,11 @@ router.get("/seller/product-list/:sellerId",requireSigninSeller, isSeller, listB
 router.put("/admin/product/update/:productId/:adminId",requireSigninAdmin, isAdmin,updateByAdmin );
 router.put("/seller/product/update/:productId/:sellerId",requireSigninSeller, isSeller,updateBySeller);
 router.delete("/admin/product/delete/:productId/:adminId",requireSigninAdmin, isAdmin, remove);
-router.get("/product/by-category", listByCategory);
-router.get("/product/by-sub-category", listBySubCategory);
+router.get("/product/by-category/:categoryId", listByCategory);
+router.get("/product/by-sub-category/:subCategoryId", listBySubCategory);
 
+router.param("categoryId",categoryById);
+router.param("subCategoryId",subcategoryById);
 router.param("productId",productById);
 router.param("sellerId",sellerById);
 router.param("adminId",adminById);
