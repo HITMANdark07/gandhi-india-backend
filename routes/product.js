@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { createByAdmin, createBySeller, listByAdmin, productById, listByCategory, listBySubCategory, updateByAdmin, updateBySeller, remove, listBySeller, read,listByCategorySlug,listFeaturedProducts} = require("../controllers/product");
+const { createByAdmin, createBySeller,list, listByAdmin, productById, listByCategory, listBySubCategory, updateByAdmin, updateBySeller, remove, listBySeller, read,listByCategorySlug,listFeaturedProducts} = require("../controllers/product");
 const { requireSigninAdmin, isAdmin, adminById } = require("../controllers/admin");
 const { sellerById, requireSigninSeller, isSeller } = require("../controllers/seller");
 const { productValidator } = require("../validator/index");
@@ -10,6 +10,7 @@ const { subcategoryById } = require("../controllers/subcategory");
 
 router.post("/admin/product/add/:adminId",requireSigninAdmin, isAdmin, createByAdmin);
 router.post("/seller/product/add/:sellerId",productValidator,requireSigninSeller, isSeller, createBySeller);
+router.get("/products/list", list);
 router.get("/product/details/:productId", read);
 router.get("/admin/product-list/:adminId",requireSigninAdmin, isAdmin, listByAdmin);
 router.get("/seller/product-list/:sellerId",requireSigninSeller, isSeller, listBySeller);

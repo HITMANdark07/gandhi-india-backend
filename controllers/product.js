@@ -67,7 +67,7 @@ exports.listByAdmin = (req, res) => {
 };
 
 exports.list = (req, res) => {
-    Product.find({})
+    Product.find({status:1})
     .exec((err, products) => {
         if(err || !products){
             return res.status(400).json({
