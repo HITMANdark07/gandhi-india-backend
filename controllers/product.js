@@ -78,7 +78,7 @@ exports.list = (req, res) => {
 };
 
 exports.listByCategory = (req, res) => {
-    Product.find({category:req.category._id})
+    Product.find({category:req.category._id, status:1})
     .populate("category subCategory","name slug")
     .exec((err, products) => {
         if(err || !products){
@@ -92,7 +92,7 @@ exports.listByCategory = (req, res) => {
 
 
 exports.listBySubCategory = (req, res) => {
-    Product.find({subCategory:req.subCategory._id})
+    Product.find({subCategory:req.subCategory._id,satus:1})
     .populate("category subCategory","name slug")
     .exec((err, products) => {
         if(err || !products){
