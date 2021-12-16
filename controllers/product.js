@@ -19,6 +19,17 @@ exports.read = (req, res) => {
     return res.json(req.product);
 }
 
+exports.listFeaturedProducts =(req, res) => {
+    Product.find({featured:1}).exec((err, products) => {
+        if(err || !products){
+            return res.status(400).json({
+                error:"Cant fetch Featred Products"
+            })
+        }
+        return res.json(products);
+    })
+}
+
 exports.listByCategorySlug = (req,res) => {
     Product.find({category:req.category._id}).exec((err, products) => {
         if(err || !products){

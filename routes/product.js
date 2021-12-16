@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { createByAdmin, createBySeller, listByAdmin, productById, listByCategory, listBySubCategory, updateByAdmin, updateBySeller, remove, listBySeller, read,listByCategorySlug} = require("../controllers/product");
+const { createByAdmin, createBySeller, listByAdmin, productById, listByCategory, listBySubCategory, updateByAdmin, updateBySeller, remove, listBySeller, read,listByCategorySlug,listFeaturedProducts} = require("../controllers/product");
 const { requireSigninAdmin, isAdmin, adminById } = require("../controllers/admin");
 const { sellerById, requireSigninSeller, isSeller } = require("../controllers/seller");
 const { productValidator } = require("../validator/index");
@@ -16,6 +16,7 @@ router.get("/seller/product-list/:sellerId",requireSigninSeller, isSeller, listB
 router.put("/admin/product/update/:productId/:adminId",requireSigninAdmin, isAdmin,updateByAdmin );
 router.put("/seller/product/update/:productId/:sellerId",requireSigninSeller, isSeller,updateBySeller);
 router.delete("/admin/product/delete/:productId/:adminId",requireSigninAdmin, isAdmin, remove);
+router.get("/featured/products", listFeaturedProducts);
 router.get("/product/by-category-slug/:categorySlug", listByCategorySlug);
 router.get("/product/by-category/:categoryId", listByCategory);
 router.get("/product/by-sub-category/:subCategoryId", listBySubCategory);
