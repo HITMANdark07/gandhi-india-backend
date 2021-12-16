@@ -32,7 +32,7 @@ exports.listFeaturedProducts =(req, res) => {
 }
 
 exports.listByCategorySlug = (req,res) => {
-    Product.find({category:req.category._id}).exec((err, products) => {
+    Product.find({category:req.category._id, status:1}).exec((err, products) => {
         if(err || !products){
             return res.status(400).json({
                 error:"Unable to fetch products"
