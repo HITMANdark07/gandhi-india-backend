@@ -19,6 +19,17 @@ exports.read = (req, res) => {
     return res.json(req.product);
 }
 
+exports.listByCategorySlug = (req,res) => {
+    Product.find({category:req.category._id}).exec((err, products) => {
+        if(err || !products){
+            return res.status(400).json({
+                error:"Unable to fetch products"
+            })
+        }
+        return res.json(products);
+    })
+}
+
 exports.listBySeller = (req,res) => {
     Product.find({added_by:req.auth._id})
     .exec((err, products) => {

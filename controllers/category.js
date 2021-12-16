@@ -35,8 +35,8 @@ exports.list = (req, res) => {
     })
 }
 
-exports.categoryBySlug =(req, res) => {
-    Category.findOne({slug:req.body.slug})
+exports.categoryBySlug =(req, res,next,slug) => {
+    Category.findOne({slug:slug})
         .exec((err, category) => {
             if(err || !category){
                 return res.status(400).json({
@@ -44,7 +44,8 @@ exports.categoryBySlug =(req, res) => {
                 });
             }
             category.photo=undefined;
-            return res.json(category);
+            req.category=category;
+            next();
         })
 }
 
