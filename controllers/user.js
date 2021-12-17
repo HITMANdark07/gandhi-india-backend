@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 exports.userById = (req, res, next, id) => {
