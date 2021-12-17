@@ -119,10 +119,10 @@ exports.sendSellerEmail = (req, res) => {
         text: 'That was really easy!',
         html:`
         <h1>please use the following link to acttivate your account</h1>
-        <a href="${process.env.CLIENT_URL}/activate/${token}" target="_blank" >CLICK HERE TO ACTIVATE YOUR ACCOUNT</a>
+        <a href="${process.env.CLIENT_SELLER_URL}/activate/${token}" target="_blank" >CLICK HERE TO ACTIVATE YOUR ACCOUNT</a>
         <hr/>
         <p>This email may contain sensitive information</p>
-        <p>${process.env.CLIENT_URL}</p>
+        <p>${process.env.CLIENT_SELLER_URL}</p>
         `
       };
 
