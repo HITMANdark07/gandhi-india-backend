@@ -23,6 +23,7 @@ const subcategoryRoutes = require("./routes/subcategory");
 const productRoutes = require("./routes/product");
 const specificationRoutes =require("./routes/specification");
 const userRoutes = require("./routes/user");
+const addressRoutes = require("./routes/address");
 // const orderRoutes = require('./routes/order');
 
 
@@ -60,6 +61,7 @@ app.use("/api",subcategoryRoutes);
 app.use("/api",productRoutes);
 app.use("/api",specificationRoutes);
 app.use("/api",userRoutes);
+app.use("/api",addressRoutes);
 
 const port = process.env.PORT|| 8000;
 

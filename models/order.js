@@ -5,7 +5,7 @@ const OrderSchema = new mongoose.Schema(
   {
     products : [{
         type:ObjectId,
-        ref:'User'
+        ref:'Product'
     }],
     city:{
         type:String
@@ -23,13 +23,21 @@ const OrderSchema = new mongoose.Schema(
         default: "COD",
         enum: ["COD", "ONLINE"]
     },
+    payment_status:{
+      type:Number,
+      default:0
+    },
     coupon:{
         type:ObjectId,
         ref:'Coupon'
     },
     total_amount: { type: Number },
     total_discount: { type: Number },
-    address: String,
+    address: {
+      type:ObjectId,
+      required:true,
+      ref:'Address'
+    },
     status: {
       type: String,
       default: "Not processed",
@@ -43,4 +51,4 @@ const OrderSchema = new mongoose.Schema(
  
 const Order = mongoose.model("Order", OrderSchema);
  
-module.exports = { Order, CartItem };
+module.exports = Order;

@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
 const nodemailer = require('nodemailer');
 
 exports.userById = (req, res, next, id) => {
@@ -40,6 +41,22 @@ exports.signUp = (req,res) => {
              token
        });
     });
+};
+
+exports.requireSigninUser = expressJwt({
+    secret: process.env.JWT_SECRET_USER,
+    algorithms: ['HS256'] ,
+    userProperty:"auth"
+});
+
+exports.isUser = (req, res, next) => {
+    let user = req.profile && req.auth && req.profile._id == req.auth._id;
+    if(!user){
+       return res.status(403).json({ 
+           error: 'Access denied'
+       });
+    }
+    next();
 };
 
 
