@@ -17,6 +17,17 @@ exports.read = (req, res) => {
     res.json(req.coupan);
 }
 
+exports.findByCode = (req, res, next, code) => {
+    Coupan.findOne({code:code}).exec((err, coupan) => {
+        if(err || !coupan){
+            res.status(400).json({
+                error:"coupan not found"
+            })
+        }
+        req.coupan = coupan;
+        next();
+    })
+}
 exports.create = (req, res) => {
     const coupan = new Coupan(req.body);
     coupan.save((err, coupan) => {
