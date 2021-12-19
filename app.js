@@ -24,6 +24,7 @@ const productRoutes = require("./routes/product");
 const specificationRoutes =require("./routes/specification");
 const userRoutes = require("./routes/user");
 const addressRoutes = require("./routes/address");
+const coupanRoutes = require("./routes/coupan");
 // const orderRoutes = require('./routes/order');
 
 
@@ -62,6 +63,7 @@ app.use("/api",productRoutes);
 app.use("/api",specificationRoutes);
 app.use("/api",userRoutes);
 app.use("/api",addressRoutes);
+app.use("/api", coupanRoutes);
 
 const port = process.env.PORT|| 8000;
 

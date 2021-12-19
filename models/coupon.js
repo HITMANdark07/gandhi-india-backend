@@ -18,6 +18,10 @@ const CouponSchema = new mongoose.Schema({
         type:Number,
         required:true,
     },
+    valid:{
+        type:Number,
+        default:0
+    },
     description:{
         type:String,
         trim:true,
