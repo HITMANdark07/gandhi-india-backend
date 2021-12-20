@@ -7,15 +7,9 @@ const OrderSchema = new mongoose.Schema(
         type:ObjectId,
         ref:'Product'
     }],
-    city:{
-        type:String
-    },
-    transaction_id: {
-        type:String,
-        required:true,
-    },
-    pincode:{
-        type:Number,
+    address:{
+        type:ObjectId,
+        ref:'Address',
         required:true
     },
     payment_mode:{
@@ -23,6 +17,12 @@ const OrderSchema = new mongoose.Schema(
         default: "COD",
         enum: ["COD", "ONLINE"]
     },
+    sellers:[
+      {
+          type:ObjectId,
+          ref:'Seller'
+      }
+    ],
     payment_status:{
       type:Number,
       default:0
@@ -43,8 +43,7 @@ const OrderSchema = new mongoose.Schema(
       default: "Not processed",
       enum: ["Not processed", "Processing", "Delivered", "Cancelled","Refunded"] // enum means string objects
     },
-    updated: Date,
-    user: { type: ObjectId, ref: "User" }
+    user: { type: ObjectId, ref: "User", required:true }
   },
   { timestamps: true }
 );

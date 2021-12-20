@@ -121,3 +121,14 @@ exports.productValidator = (req,res, next)=>{
     }
     next();
 };
+
+exports.orderValidator = (req, res, next) => {
+    req.check('address', 'Address is Required').notEmpty();
+    req.check('payment_mode',"Please Select a Payment Method").notEmpty()
+    const errors = req.validationErrors();
+    if(errors){
+        const firstError = errors.map(error => error.msg)[0];
+        return res.status(400).json({ error: firstError });
+    }
+    next();
+}
