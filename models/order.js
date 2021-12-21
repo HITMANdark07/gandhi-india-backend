@@ -33,11 +33,6 @@ const OrderSchema = new mongoose.Schema(
     },
     total_amount: { type: Number },
     total_discount: { type: Number },
-    address: {
-      type:ObjectId,
-      required:true,
-      ref:'Address'
-    },
     status: {
       type: String,
       default: "Not processed",
