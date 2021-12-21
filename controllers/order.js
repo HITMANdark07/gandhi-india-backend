@@ -121,6 +121,7 @@ exports.ordersByUser = (req, res) => {
     Order.find({user:req.profile._id})
     .populate("products", "photo name price")
     .populate("address coupon")
+    .sort({createdAt: 'desc'})
     .exec((err, orders) => {
         if(err || !orders){
             res.status(400).json({
