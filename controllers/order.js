@@ -155,12 +155,12 @@ exports.ordersByUser = (req, res) => {
 exports.orderslist = (req, res) => {
     const l = req.query.limit || 10;
     const s = req.query.skip || 0;
-    Order.find()
+    Order.find({})
     .populate("products", "photo name price")
     .populate("address coupon")
     .sort({createdAt: -1})
-    .skip(s)
-    .limit(l)
+    .skip(parseInt(s))
+    .limit(parseInt(l))
     .exec((err, orders) => {
         if(err || !orders){
             res.status(400).json({
