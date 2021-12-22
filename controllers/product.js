@@ -19,7 +19,7 @@ exports.productById = (req, res, next, id) => {
 exports.read = (req, res) => {
     return res.json(req.product);
 }
-
+ 
 exports.listFeaturedProducts =(req, res) => {
     Product.find({featured:1,status:1}).exec((err, products) => {
         if(err || !products){
