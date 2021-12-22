@@ -186,7 +186,7 @@ exports.bulkToShipped = (req,res) => {
     let bulkOps = req.body.products.map((ord) => {
         return {
             updateOne:{
-                filter: { _id: ord._id},
+                filter: { _id: ord},
                 update: { $set: { status: 'Shipped'}}
             }
         }
