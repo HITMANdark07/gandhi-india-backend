@@ -5,7 +5,7 @@ const {  errorHandler } = require("../helpers/dbErrorHandler");
 const seller = require("../models/seller");
 
 exports.orderById = (req, res, next, id) => {
-    Orders.findById(id).exec((err, order) => {
+    Order.findById(id).exec((err, order) => {
         if(err || !order){
             res.status(400).json({
                 error:"Order not found"
