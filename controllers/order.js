@@ -1,7 +1,7 @@
 const Order = require("../models/order");
 const Coupan = require("../models/coupon");
 const Product = require("../models/product");
-const { dbErrorHandler, errorHandler } = require("../helpers/dbErrorHandler");
+const {  errorHandler } = require("../helpers/dbErrorHandler");
 const seller = require("../models/seller");
 
 exports.orderById = (req, res, next, id) => {
@@ -126,6 +126,36 @@ exports.ordersByUser = (req, res) => {
         if(err || !orders){
             res.status(400).json({
                 error : errorHandler(err)
+            })
+        }
+        res.json(orders);
+    })
+}
+
+exports.orderslist = (req, res) => {
+    const limit = req.query.limit || 10;
+    const skip = req.query.skip || 0;
+    Order.find()
+    .populate("products", "photo name price")
+    .populate("address coupon")
+    .sort({createdAt: 'desc'})
+    .skip(skip)
+    .limit(limit)
+    .exec((err, orders) => {
+        if(err || !orders){
+            res.status(400).json({
+                error : errorHandler(err)
+            })
+        }
+        res.json(orders);
+    })
+}
+exports.ordersBySeller = (req, res) => {
+    Order.find({sellers: { $in :[req.seller._id]}})
+    .exec((err, orders) => {
+        if(err || !orders){
+            res.status(400).json({
+                error: errorHandler(err)
             })
         }
         res.json(orders);
