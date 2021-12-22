@@ -101,6 +101,26 @@ exports.create = (req, res) => {
     
 };
 
+exports.decreaseQunatity = (req, res, next) => {
+    let {products} = req.body;
+    let bulkOps = products.map((pro) => {
+        return {
+            updateOne: {
+                filter:{ _id: pro},
+                update:{ $inc : {quantity: -1, sold: 1}}
+            }
+        }
+    });
+    Product.bulkWrite(bulkOps, {}, (err, products) => {
+        if(err){
+            res.status(400).json({
+                error:errorHandler(err)
+            })
+        }
+        next();
+    })
+}
+
 exports.update = (req, res) => {
     Order.findOneAndUpdate(
         {_id:req.order._id},
@@ -133,14 +153,14 @@ exports.ordersByUser = (req, res) => {
 }
 
 exports.orderslist = (req, res) => {
-    const limit = req.query.limit || 10;
-    const skip = req.query.skip || 0;
+    const l = req.query.limit || 10;
+    const s = req.query.skip || 0;
     Order.find()
     .populate("products", "photo name price")
     .populate("address coupon")
-    .sort({createdAt: 'desc'})
-    .skip(skip)
-    .limit(limit)
+    .sort({createdAt: -1})
+    .skip(s)
+    .limit(l)
     .exec((err, orders) => {
         if(err || !orders){
             res.status(400).json({
@@ -159,5 +179,26 @@ exports.ordersBySeller = (req, res) => {
             })
         }
         res.json(orders);
+    })
+}
+
+exports.bulkToShipped = (req,res) => {
+    let bulkOps = req.body.products.map((ord) => {
+        return {
+            updateOne:{
+                filter: { _id: ord._id},
+                update: { $set: { status: 'Shipped'}}
+            }
+        }
+    });
+    Order.bulkWrite(bulkOps,{}, (error, products) => {
+        if(error){
+            res.status(400).json({
+                error: errorHandler(error)
+            })
+        }
+        res.json({
+            message:"Updated Successfully"
+        })
     })
 }
