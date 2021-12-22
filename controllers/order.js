@@ -158,6 +158,7 @@ exports.orderslist = (req, res) => {
     Order.find({})
     .populate("products", "photo name price")
     .populate("address coupon")
+    .populate("sellers", "name")
     .sort({createdAt: -1})
     .skip(parseInt(s))
     .limit(parseInt(l))
