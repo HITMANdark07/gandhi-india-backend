@@ -26,11 +26,13 @@ const productSchema = new mongoose.Schema({
         required:true,
         maxlength:32
     },
-    category:{
+    category:[
+        {
         type:ObjectId,
         ref:'Category',
         required:true,
-    },
+        }
+    ],
     subCategory:{
         type:ObjectId,
         ref:'SubCategory',

@@ -48,7 +48,7 @@ exports.update = (req, res) => {
         {$set : req.body},
         {new:true},
         (err, specs) => {
-            if(err || !specs){
+            if(err){
                 return res.status(400).json({
                     error: "Unable to Update your changes"
                 })
